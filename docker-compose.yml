@@ -14,7 +14,7 @@ services:
       - BOT_TOKEN
       - BANK_ACCOUNT
       - BANK_CODE
-      - DB_NAME=/app/sql3lite/sales.db
+      - DB_NAME=/app/sqlite3/sales.db
     volumes:
       - report-data:/app/report  # đồng bộ folder report ra host
       - sqlite3-data:/app/sqlite3      # mount folder to store sqlite DB

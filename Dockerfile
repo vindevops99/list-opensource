@@ -1,32 +1,43 @@
-# Sử dụng Python 3.10
-FROM python:3.10-slim
-
-# Môi trường: không buffer stdout/stderr (log realtime)
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory
+# ===============================
+# Stage 1: Build dependencies
+# ===============================
+FROM python:3.10-slim AS builder
 WORKDIR /app
 
-# Copy toàn bộ project vào container
+# Cài dependencies trước để tận dụng cache
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+
+# ===============================
+# Stage 2: Runtime
+# ===============================
+FROM python:3.10-slim
+
+# Môi trường
+ENV PYTHONUNBUFFERED=1
+
+# Tạo thư mục làm việc
+WORKDIR /app
+
+# Copy dependencies từ stage builder
+COPY --from=builder /usr/local /usr/local
+
+# Copy toàn bộ mã nguồn và script entrypoint
 COPY . /app
 COPY entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
 
-# Cài dependencies
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
-
-# Tạo folder report trong container và user không phải root
-RUN mkdir -p /app/report && \
-    adduser --disabled-password --gecos "" botuser || true && \
+# Tạo user không phải root để chạy an toàn
+RUN adduser --disabled-password --gecos "" botuser && \
+    mkdir -p /app/sqlite3 /app/report && \
     chown -R botuser:botuser /app
 
-# Chạy app dưới user không phải root
-USER botuser
+# Đặt user mặc định
+USER root
 
-# Entrypoint tạo .env từ mẫu nếu cần, tạo thư mục data/report, v.v.
+# Entrypoint để tự fix quyền, tạo file .env và log khi start
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-# Default CMD: chạy bot
+# Lệnh mặc định chạy bot
 CMD ["python", "bot.py"]
-

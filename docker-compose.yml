@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  telegram-bot:
+    build: .
+    # Image name to be used for the built image. Can be overridden via IMAGE_NAME env var.
+    image: "${IMAGE_NAME:-telegram-sales-bot:latest}"
+    container_name: telegram-sales-bot
+    restart: always
+    env_file:
+      - .env
+    environment:
+      # These will be read from .env if present; you can override here as well
+      - BOT_TOKEN
+      - BANK_ACCOUNT
+      - BANK_CODE
+      - DB_NAME=/app/sql3lite/sales.db
+    volumes:
+      - ./report:/app/report  # đồng bộ folder report ra host
+      - ./sql3lite:/app/sql3lite      # mount folder to store sqlite DB
+      - ./bot.log:/app/bot.log   # optional log file on host
+    network_mode: "bridge"
+

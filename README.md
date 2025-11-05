@@ -21,7 +21,7 @@ Một bot Telegram giúp theo dõi chi tiêu và quản lý hóa đơn, được
 
 1. Clone repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/vindevops99/list-opensource.git
 cd telegram-chat-bot
 ```
 
@@ -63,7 +63,7 @@ Bot hỗ trợ các lệnh sau:
 - `/inbill` - Ghi lại hóa đơn mới
 - `/expense` - Ghi lại khoản chi tiêu
 - `/report` - Tạo báo cáo chi tiêu
-
+- `/cancel` - Hủy thao tác hiện tại
 ## Cấu trúc Project
 
 ```
@@ -105,3 +105,9 @@ Mọi đóng góp đều được hoan nghênh! Vui lòng:
 ## License
 
 [MIT License](LICENSE)
+
+## Tác giả
+
+- **vindevops99** - *Initial work* - [GitHub](https://github.com/vindevops99)
+
+Project được khởi tạo bởi [vindevops99](https://github.com/vindevops99/list-opensource)

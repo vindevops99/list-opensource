@@ -4,7 +4,7 @@ set -e
 APP_DIR="/app"
 ENV_FILE="$APP_DIR/.env"
 EXAMPLE_ENV="$APP_DIR/.env.example"
-SQL_DIR="$APP_DIR/sql3lite"
+SQL_DIR="$APP_DIR/sqlite3"
 REPORT_DIR="$APP_DIR/report"
 LOG_FILE="$APP_DIR/bot.log"
 

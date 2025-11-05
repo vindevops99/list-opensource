@@ -4,5 +4,6 @@ __pycache__/
 *.pyc
 .vscode/
 .DS_Store
-report/
+report
 sql3lite
+venv

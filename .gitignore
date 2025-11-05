@@ -4,5 +4,5 @@ __pycache__/
 *.pyc
 .vscode/
 .DS_Store
-reports/
+report/
 sql3lite

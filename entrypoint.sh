@@ -22,8 +22,13 @@ mkdir -p "$SQL_DIR" "$REPORT_DIR"
 touch "$LOG_FILE"
 
 # 3️⃣ Cấp quyền cho botuser truy cập các volume được mount
-echo "[entrypoint] Fixing permissions for volumes..."
-#chown -R botuser:botuser "$SQL_DIR" "$REPORT_DIR" "$LOG_FILE" 2>/dev/null || true
+echo "[entrypoint] Fixing permissions for volumes and logs..."
+# Đảm bảo botuser có quyền ghi vào thư mục app và các thư mục con
+chown -R botuser:botuser "$APP_DIR" 2>/dev/null || true
+chmod -R 775 "$APP_DIR" 2>/dev/null || true
+
+# Quyền cụ thể cho từng thư mục/file
+chown botuser:botuser "$SQL_DIR" "$REPORT_DIR" "$LOG_FILE" 2>/dev/null || true
 chmod 775 "$SQL_DIR" "$REPORT_DIR" || true
 chmod 664 "$LOG_FILE" || true
 
